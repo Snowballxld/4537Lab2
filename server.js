@@ -20,13 +20,17 @@ app.get("/getDate", (req, res) => {
 
 //writing
 app.get("/writeFile", (req, res) => {
-    const fileHandler = new FileHandler();
+    const filePath = `./file.txt`;
+    const fileHandler = new FileHandler(filePath);
     fileHandler.appendToFile(req.query.text, (message) => res.send(message));
 });
 
 //reading
 app.get("/readFile/:filename", (req, res) => {
-    const fileHandler = new FileHandler();
+    const filename = req.params.filename;
+    const filePath = `./${filename}`;
+
+    const fileHandler = new FileHandler(filePath);
     fileHandler.readFile((data) => res.send(`<pre>${data}</pre>`));
 });
 
