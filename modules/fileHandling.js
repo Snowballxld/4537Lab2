@@ -3,8 +3,8 @@ const fs = require("fs");
 const path = require("path");
 
 class FileHandler {
-    constructor() {
-        this.filePath = path.join(__dirname, "../file.txt");
+    constructor(filePath) {
+        this.filePath = path.join(__dirname, "." + filePath);
     }
 
     //Appending
@@ -14,7 +14,12 @@ class FileHandler {
 
     //Reading
     readFile(callback) {
-        fs.readFile(this.filePath, "utf8", (_, data) => callback(data));
+        fs.readFile(this.filePath, "utf8", (err, data) => {
+            if (err) {
+                return callback(`Error 404: File not found`);
+            }
+            callback(data);
+        });
     }
 }
 
